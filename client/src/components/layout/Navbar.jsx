@@ -1,9 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Container from "../common/Container";
 import Button from "../common/Button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate("/login");
+  };
 
   return (
     <nav className="fixed top-0 w-full bg-slate-900/95 backdrop-blur-sm border-b border-slate-800 z-50">
@@ -44,7 +50,9 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:block">
-            <Button size="sm">Get Started</Button>
+            <Button size="sm" onClick={handleGetStarted}>
+              Get Started
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -102,7 +110,7 @@ const Navbar = () => {
                 Why Us
               </a>
               <div className="px-3 py-2">
-                <Button size="sm" className="w-full">
+                <Button size="sm" className="w-full" onClick={handleGetStarted}>
                   Get Started
                 </Button>
               </div>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/common/Container";
 import Button from "../components/common/Button";
 import Heading from "../components/common/Heading";
+import { authAPI } from "../utils/api";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,15 +29,7 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
+      const data = await authAPI.login(formData);
 
       if (data.success) {
         // Save token to localStorage
@@ -49,7 +42,9 @@ const Login = () => {
         setError(data.message || "Login failed");
       }
     } catch (err) {
-      setError("Network error. Please check if the server is running.");
+      setError(
+        err.message || "Network error. Please check if the server is running."
+      );
     } finally {
       setLoading(false);
     }

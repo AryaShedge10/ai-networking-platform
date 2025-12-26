@@ -1,9 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import Container from "../common/Container";
 import Section from "../common/Section";
 import Heading from "../common/Heading";
 import Button from "../common/Button";
 
 const CTA = () => {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate("/login");
+  };
+
   return (
     <Section className="bg-linear-to-r from-indigo-900 via-purple-900 to-indigo-900 relative overflow-hidden">
       {/* Background effects */}
@@ -24,7 +31,11 @@ const CTA = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-            <Button size="lg" className="w-full sm:w-auto text-lg px-12">
+            <Button
+              size="lg"
+              className="w-full sm:w-auto text-lg px-12"
+              onClick={handleGetStarted}
+            >
               Get Started Free
             </Button>
             <Button

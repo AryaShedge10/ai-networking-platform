@@ -1,9 +1,22 @@
+import { useNavigate } from "react-router-dom";
 import Container from "../common/Container";
 import Section from "../common/Section";
 import Heading from "../common/Heading";
 import Button from "../common/Button";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate("/login");
+  };
+
+  const handleHowItWorks = () => {
+    document
+      .getElementById("how-it-works")
+      ?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <Section className="pt-32 pb-16 bg-linear-to-br from-slate-900 via-slate-800 to-indigo-900 relative overflow-hidden">
       {/* Background glow effects */}
@@ -25,10 +38,19 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="w-full sm:w-auto">
+            <Button
+              size="lg"
+              className="w-full sm:w-auto"
+              onClick={handleGetStarted}
+            >
               Get Started
             </Button>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto">
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto"
+              onClick={handleHowItWorks}
+            >
               How It Works
             </Button>
           </div>
