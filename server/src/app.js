@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 // Import routes
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import matchingRoutes from "./routes/matching.routes.js";
 
 // Import middlewares
 import { errorHandler, notFound } from "./middlewares/error.middleware.js";
@@ -69,6 +70,7 @@ app.get("/health", (req, res) => {
 // API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/matching", matchingRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {
