@@ -124,11 +124,11 @@ const Dashboard = () => {
                   Start conversations with your matches instantly
                 </p>
                 <Button
-                  variant="secondary"
+                  variant="primary"
                   size="sm"
-                  onClick={() => navigate("/matches")}
+                  onClick={() => navigate("/chats")}
                 >
-                  Start Chatting
+                  View Chats
                 </Button>
               </div>
 

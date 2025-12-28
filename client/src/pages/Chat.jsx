@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { chatAPI } from "../services/api";
 import socketService from "../services/socket";
@@ -11,6 +11,21 @@ const Chat = () => {
   const { roomId } = useParams();
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // FIX: Smart back navigation - determine where user came from
+  const getBackPath = () => {
+    // Check if user came from /chats (via location state)
+    if (location.state?.from === "/chats") {
+      return "/chats";
+    }
+    // Check if we're on mobile (screen width < 768px) - go to /chats
+    if (window.innerWidth < 768) {
+      return "/chats";
+    }
+    // Default: go to /matches (desktop behavior)
+    return "/matches";
+  };
 
   const [chatRoom, setChatRoom] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -204,21 +219,24 @@ const Chat = () => {
 
   return (
     <div className="h-screen bg-slate-900 flex">
-      {/* FIX: Add WhatsApp-style chat sidebar */}
-      <ChatSidebar />
+      {/* FIX: Responsive sidebar - hidden on mobile, visible on desktop */}
+      <div className="hidden md:block">
+        <ChatSidebar />
+      </div>
 
-      {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      {/* Main Chat Area - FIX: Takes full screen on mobile, flex-1 on desktop */}
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Chat Header */}
         <div className="bg-slate-800 border-b border-slate-700 shrink-0">
           <Container>
             <div className="py-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
+                  {/* FIX: Smart back navigation based on source */}
                   <Button
                     variant="secondary"
                     size="sm"
-                    onClick={() => navigate("/matches")}
+                    onClick={() => navigate(getBackPath())}
                   >
                     ← Back
                   </Button>
@@ -274,7 +292,7 @@ const Chat = () => {
                         }`}
                       >
                         <div
-                          className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg shadow-md ${
+                          className={`max-w-xs sm:max-w-sm lg:max-w-md px-4 py-3 rounded-lg shadow-md ${
                             isCurrentUser
                               ? "bg-linear-to-r from-indigo-600 to-purple-600 text-white rounded-br-sm"
                               : "bg-slate-700 text-slate-100 rounded-bl-sm"

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import Container from "../common/Container";
 import Section from "../common/Section";
 import Heading from "../common/Heading";
@@ -6,9 +7,15 @@ import Button from "../common/Button";
 
 const CTA = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const handleGetStarted = () => {
-    navigate("/login");
+    // FIX: Respect auth state - redirect to dashboard if logged in
+    if (user) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -36,14 +43,8 @@ const CTA = () => {
               className="w-full sm:w-auto text-lg px-12"
               onClick={handleGetStarted}
             >
-              Get Started Free
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full sm:w-auto text-lg px-12"
-            >
-              Watch Demo
+              {/* FIX: Show different text based on auth state */}
+              {user ? "Go to Dashboard" : "Get Started Free"}
             </Button>
           </div>
 

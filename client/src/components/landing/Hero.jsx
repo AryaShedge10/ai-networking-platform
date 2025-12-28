@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import Container from "../common/Container";
 import Section from "../common/Section";
 import Heading from "../common/Heading";
@@ -6,9 +7,15 @@ import Button from "../common/Button";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const handleGetStarted = () => {
-    navigate("/login");
+    // FIX: Respect auth state - redirect to dashboard if logged in
+    if (user) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
   };
 
   const handleHowItWorks = () => {
@@ -43,7 +50,8 @@ const Hero = () => {
               className="w-full sm:w-auto"
               onClick={handleGetStarted}
             >
-              Get Started
+              {/* FIX: Show different text based on auth state */}
+              {user ? "Go to Dashboard" : "Get Started"}
             </Button>
             <Button
               variant="outline"
