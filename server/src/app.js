@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import matchingRoutes from "./routes/matching.routes.js";
+import chatRoutes from "./routes/chat.routes.js";
 
 // Import middlewares
 import { errorHandler, notFound } from "./middlewares/error.middleware.js";
@@ -71,6 +72,7 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/matching", matchingRoutes);
+app.use("/api/chat", chatRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {

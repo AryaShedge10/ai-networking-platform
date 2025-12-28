@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import Container from "../components/common/Container";
 import Button from "../components/common/Button";
 import Heading from "../components/common/Heading";
-import { authAPI, userAPI } from "../utils/api";
+import { usersAPI } from "../services/api";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { register } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -28,7 +30,7 @@ const Register = () => {
   useEffect(() => {
     const loadQuizQuestions = async () => {
       try {
-        const response = await userAPI.getQuizQuestions();
+        const response = await usersAPI.getQuizQuestions();
         if (response.success) {
           setQuizQuestions(response.data.questions);
         }
@@ -122,7 +124,7 @@ const Register = () => {
     setError("");
 
     try {
-      const data = await authAPI.register({
+      await register({
         name: basicData.name,
         username: basicData.username,
         email: basicData.email,
@@ -130,16 +132,7 @@ const Register = () => {
         onboardingAnswers: quizAnswers,
       });
 
-      if (data.success) {
-        // Save token to localStorage
-        localStorage.setItem("token", data.data.token);
-        localStorage.setItem("user", JSON.stringify(data.data.user));
-
-        // Redirect to dashboard
-        navigate("/dashboard");
-      } else {
-        setError(data.message || "Registration failed");
-      }
+      navigate("/dashboard");
     } catch (err) {
       setError(
         err.message || "Network error. Please check if the server is running."

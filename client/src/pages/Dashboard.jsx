@@ -1,36 +1,29 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import Container from "../components/common/Container";
 import Heading from "../components/common/Heading";
 import Button from "../components/common/Button";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // Check if user is logged in
-    const token = localStorage.getItem("token");
-    const userData = localStorage.getItem("user");
-
-    if (!token || !userData) {
-      navigate("/login");
-      return;
-    }
-
-    try {
-      setUser(JSON.parse(userData));
-    } catch (error) {
-      console.error("Error parsing user data:", error);
-      navigate("/login");
-    }
-  }, [navigate]);
+  const { user, loading, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    logout();
     navigate("/");
   };
+
+  // FIX: Show loading state while auth is being checked
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 mx-auto mb-4"></div>
+          <p className="text-slate-300">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!user) {
     return (
@@ -100,7 +93,7 @@ const Dashboard = () => {
           {/* Coming Soon Features */}
           <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 shadow-2xl">
             <Heading level={2} className="mb-6">
-              Coming Soon Features
+              Available Features
             </Heading>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -109,20 +102,34 @@ const Dashboard = () => {
                 <h3 className="text-lg font-semibold text-white mb-2">
                   AI Matching
                 </h3>
-                <p className="text-slate-400 text-sm">
-                  Get matched with compatible people based on your interests and
-                  goals
+                <p className="text-slate-400 text-sm mb-4">
+                  Get matched with compatible people based on your personality
+                  quiz
                 </p>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => navigate("/matches")}
+                >
+                  Find Matches
+                </Button>
               </div>
 
               <div className="text-center p-6 bg-slate-800/30 rounded-xl border border-slate-600">
                 <div className="text-4xl mb-4">💬</div>
                 <h3 className="text-lg font-semibold text-white mb-2">
-                  Smart Chat
+                  Real-time Chat
                 </h3>
-                <p className="text-slate-400 text-sm">
-                  AI-powered conversation starters and real-time messaging
+                <p className="text-slate-400 text-sm mb-4">
+                  Start conversations with your matches instantly
                 </p>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => navigate("/matches")}
+                >
+                  Start Chatting
+                </Button>
               </div>
 
               <div className="text-center p-6 bg-slate-800/30 rounded-xl border border-slate-600">
@@ -130,17 +137,20 @@ const Dashboard = () => {
                 <h3 className="text-lg font-semibold text-white mb-2">
                   Learning Groups
                 </h3>
-                <p className="text-slate-400 text-sm">
+                <p className="text-slate-400 text-sm mb-4">
                   Join curated groups based on your learning goals and interests
                 </p>
+                <Button variant="outline" size="sm" disabled>
+                  Coming Soon
+                </Button>
               </div>
             </div>
 
             <div className="mt-8 text-center">
               <p className="text-slate-400 mb-4">
-                We're working hard to bring you these features. Stay tuned!
+                Start by finding your AI-powered matches and begin meaningful
+                conversations!
               </p>
-              <Button variant="outline">Notify Me When Ready</Button>
             </div>
           </div>
         </div>

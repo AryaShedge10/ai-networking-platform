@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import Container from "../components/common/Container";
 import Button from "../components/common/Button";
 import Heading from "../components/common/Heading";
-import { authAPI } from "../utils/api";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -29,18 +30,8 @@ const Login = () => {
     setError("");
 
     try {
-      const data = await authAPI.login(formData);
-
-      if (data.success) {
-        // Save token to localStorage
-        localStorage.setItem("token", data.data.token);
-        localStorage.setItem("user", JSON.stringify(data.data.user));
-
-        // Redirect to dashboard (placeholder route)
-        navigate("/dashboard");
-      } else {
-        setError(data.message || "Login failed");
-      }
+      await login(formData);
+      navigate("/dashboard");
     } catch (err) {
       setError(
         err.message || "Network error. Please check if the server is running."

@@ -1,4 +1,5 @@
 import express from "express";
+import { param } from "express-validator";
 import {
   getMatchingData,
   receiveMatchingResults,
@@ -8,21 +9,21 @@ import { authenticateToken } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-// PART 1: Send onboarding data to ML service
-// GET /api/matching/data - Fetch data for ML processing
-// This endpoint provides clean quiz data for cosine similarity calculation
-// Returns only userId and numeric quizAnswers (no sensitive data)
+// Validation for user ID parameter
+const userIdValidation = [
+  param("userId").isMongoId().withMessage("Invalid user ID format"),
+];
+
+// PART 1: Legacy endpoint for ML service compatibility
+// GET /api/matching/data - Deprecated
 router.get("/data", authenticateToken, getMatchingData);
 
-// PART 2: Receive similarity results from ML service
-// POST /api/matching/results - Receive ML results
-// ML service sends back similarity scores for user matching
-// This endpoint stores/logs results for later filtering and chat initiation
+// PART 2: Legacy endpoint for ML service compatibility
+// POST /api/matching/results - Deprecated
 router.post("/results", receiveMatchingResults);
 
-// PART 3: Get user matches with filtering
-// GET /api/matching/:userId - Get filtered matches for user
-// Returns processed matches for frontend display
-router.get("/:userId", authenticateToken, getUserMatches);
+// PART 3: Get user matches with cosine similarity (NEW IMPLEMENTATION)
+// GET /api/matching/:userId - Get matches for user using internal cosine similarity
+router.get("/:userId", authenticateToken, userIdValidation, getUserMatches);
 
 export default router;
