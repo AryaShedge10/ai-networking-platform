@@ -232,6 +232,19 @@ const Chat = () => {
             <div className="py-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-3">
+                    <div>
+                      <h1 className="text-lg font-semibold text-white">
+                        {otherParticipant?.name || "Chat"}
+                      </h1>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span className="text-sm text-slate-400">Online</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center">
                   {/* FIX: Smart back navigation based on source */}
                   <Button
                     variant="secondary"
@@ -240,18 +253,6 @@ const Chat = () => {
                   >
                     ← Back
                   </Button>
-                  <div>
-                    <h1 className="text-lg font-semibold text-white">
-                      {otherParticipant?.name || "Chat"}
-                    </h1>
-                    <p className="text-sm text-slate-400">
-                      ⭐ {otherParticipant?.reputationScore || 0} reputation
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-sm text-slate-300">Online</span>
                 </div>
               </div>
             </div>
@@ -299,11 +300,7 @@ const Chat = () => {
                           }`}
                         >
                           {/* FIX: Show sender name for other users only */}
-                          {!isCurrentUser && (
-                            <p className="text-xs text-slate-400 mb-1 font-medium">
-                              {message.senderName}
-                            </p>
-                          )}
+                          {!isCurrentUser && <></>}
                           <p className="text-sm leading-relaxed">
                             {message.message}
                           </p>

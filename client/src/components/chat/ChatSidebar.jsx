@@ -124,11 +124,6 @@ const ChatSidebar = () => {
                       >
                         {otherParticipant?.name || "Unknown User"}
                       </h3>
-                      {otherParticipant?.reputationScore && (
-                        <span className="ml-2 text-xs text-yellow-400">
-                          ⭐ {otherParticipant.reputationScore}
-                        </span>
-                      )}
                     </div>
 
                     {/* Last Message */}

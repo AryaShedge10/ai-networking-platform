@@ -77,7 +77,7 @@ export const findSimilarUsers = async (
   };
 
   const similarUsers = await Onboarding.find(query)
-    .populate("userId", "name email reputationScore")
+    .populate("userId", "name email")
     .limit(limit)
     .sort({ createdAt: -1 });
 

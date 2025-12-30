@@ -59,7 +59,7 @@ const Dashboard = () => {
               the ConnectAI community.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6">
               <div className="bg-slate-800/50 p-6 rounded-xl border border-slate-600">
                 <h3 className="text-lg font-semibold text-white mb-2">
                   Profile Status
@@ -75,18 +75,6 @@ const Dashboard = () => {
                   </span>
                 </div>
               </div>
-
-              <div className="bg-slate-800/50 p-6 rounded-xl border border-slate-600">
-                <h3 className="text-lg font-semibold text-white mb-2">
-                  Reputation Score
-                </h3>
-                <p className="text-2xl font-bold text-indigo-400 mb-2">
-                  {user.reputationScore}
-                </p>
-                <p className="text-slate-400 text-sm">
-                  Start conversations to build your reputation
-                </p>
-              </div>
             </div>
           </div>
 
@@ -96,7 +84,7 @@ const Dashboard = () => {
               Available Features
             </Heading>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="text-center p-6 bg-slate-800/30 rounded-xl border border-slate-600">
                 <div className="text-4xl mb-4">🤖</div>
                 <h3 className="text-lg font-semibold text-white mb-2">
@@ -129,19 +117,6 @@ const Dashboard = () => {
                   onClick={() => navigate("/chats")}
                 >
                   View Chats
-                </Button>
-              </div>
-
-              <div className="text-center p-6 bg-slate-800/30 rounded-xl border border-slate-600">
-                <div className="text-4xl mb-4">🎯</div>
-                <h3 className="text-lg font-semibold text-white mb-2">
-                  Learning Groups
-                </h3>
-                <p className="text-slate-400 text-sm mb-4">
-                  Join curated groups based on your learning goals and interests
-                </p>
-                <Button variant="outline" size="sm" disabled>
-                  Coming Soon
                 </Button>
               </div>
             </div>

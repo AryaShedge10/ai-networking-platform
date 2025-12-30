@@ -38,11 +38,6 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters"],
     },
-    reputationScore: {
-      type: Number,
-      default: 0,
-      min: [0, "Reputation score cannot be negative"],
-    },
     isBanned: {
       type: Boolean,
       default: false,

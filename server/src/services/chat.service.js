@@ -33,7 +33,7 @@ export async function createChatRoom(userId1, userId2) {
     });
 
     await chatRoom.save();
-    await chatRoom.populate("participants", "name reputationScore");
+    await chatRoom.populate("participants", "name");
 
     return chatRoom;
   } catch (error) {
@@ -53,7 +53,7 @@ export async function getUserChatRooms(userId) {
       participants: userId,
       isActive: true,
     })
-      .populate("participants", "name reputationScore")
+      .populate("participants", "name")
       .sort({ lastMessageAt: -1 });
 
     return chatRooms;
@@ -75,7 +75,7 @@ export async function getChatRoom(roomId, userId) {
       _id: roomId,
       participants: userId,
       isActive: true,
-    }).populate("participants", "name reputationScore");
+    }).populate("participants", "name");
 
     if (!chatRoom) {
       throw new Error("Chat room not found or access denied");

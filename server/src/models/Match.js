@@ -38,8 +38,8 @@ matchSchema.statics.findUserMatches = function (userId) {
   return this.find({
     $or: [{ userA: userId }, { userB: userId }],
   })
-    .populate("userA", "name reputationScore")
-    .populate("userB", "name reputationScore")
+    .populate("userA", "name")
+    .populate("userB", "name")
     .sort({ similarityScore: -1 })
     .limit(10);
 };

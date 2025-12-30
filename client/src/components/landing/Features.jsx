@@ -26,13 +26,6 @@ const Features = () => {
       highlight: false,
     },
     {
-      title: "Reputation System",
-      description:
-        "Build trust through community ratings and verified achievements in your areas of expertise.",
-      icon: "⭐",
-      highlight: false,
-    },
-    {
       title: "Safety & Moderation",
       description:
         "AI-powered content moderation and reporting system ensures a safe, respectful environment.",

@@ -160,12 +160,6 @@ const Matches = () => {
                       <h3 className="text-lg font-semibold text-white">
                         {match.name}
                       </h3>
-                      <div className="flex items-center space-x-1">
-                        <span className="text-yellow-400">⭐</span>
-                        <span className="text-sm text-slate-300">
-                          {match.reputationScore}
-                        </span>
-                      </div>
                     </div>
                   </div>
 

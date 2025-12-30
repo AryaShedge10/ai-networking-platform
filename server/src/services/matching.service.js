@@ -83,7 +83,7 @@ export async function findUserMatches(userId) {
             { userA: otherUserId, userB: userId },
             { userA: userId, userB: otherUserId },
           ],
-        }).populate("userA userB", "name reputationScore");
+        }).populate("userA userB", "name");
 
         if (reverseMatch) {
           const otherUser =
@@ -91,7 +91,6 @@ export async function findUserMatches(userId) {
           mutualMatches.push({
             userId: otherUser._id,
             name: otherUser.name,
-            reputationScore: otherUser.reputationScore,
             similarityScore: match.similarityScore,
           });
         }
@@ -119,7 +118,7 @@ export async function findUserMatches(userId) {
     const allOnboardings = await Onboarding.find({
       userId: { $ne: userId },
       isCompleted: true,
-    }).populate("userId", "name reputationScore");
+    }).populate("userId", "name");
 
     if (allOnboardings.length === 0) {
       return [];
@@ -143,7 +142,6 @@ export async function findUserMatches(userId) {
         matches.push({
           userId: otherOnboarding.userId._id,
           name: otherOnboarding.userId.name,
-          reputationScore: otherOnboarding.userId.reputationScore,
           similarityScore: roundedSimilarity,
         });
 
